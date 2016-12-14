@@ -86,7 +86,7 @@ def typed_ordered_dict(key_type, value_type, default):
         for key, value in OrderedDict(setting).items())
 
 
-@generate_repr('key', 'value', 'origin', 'from_cli')
+@generate_repr('key', 'value', 'origin', 'from_cli', 'to_append')
 class Setting(StringConverter):
     """
     A Setting consists mainly of a key and a value. It mainly offers many
@@ -97,6 +97,7 @@ class Setting(StringConverter):
                  key,
                  value,
                  origin='',
+                 to_append=False,
                  strip_whitespaces=True,
                  list_delimiters=(',', ';'),
                  from_cli=False,
@@ -114,6 +115,9 @@ class Setting(StringConverter):
                                            you want to specify a directory as
                                            origin be sure to end it with a
                                            directory separator.
+        :param to_append:                  The boolean value if setting value
+                                           needs to be appended to a setting in
+                                           the defaults of a section.
         :param strip_whitespaces:          Whether to strip whitespaces from
                                            the value or not
         :param list_delimiters:            Delimiters for list conversion
@@ -135,6 +139,7 @@ class Setting(StringConverter):
         self.from_cli = from_cli
         self.key = key
         self.origin = str(origin)
+        self.to_append = to_append
 
     def __path__(self, origin=None, glob_escape_origin=False):
         """
